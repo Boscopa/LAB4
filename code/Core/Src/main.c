@@ -19,9 +19,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -142,31 +143,33 @@ int main(void)
 	  u = (kp*er)+(ki*eri)+(kd*erd);
 	  erp = er;
 
-	  duty = u;
+	  //u = fabs(u);
+
+	  duty = fabs(u);
 
 	  if(duty > 100)
 	  {
 		  duty = 100;
 	  }
-	  if(duty < 0){
-		  duty = 0;
-	  }
+
+//	  if(duty < 0){
+//		  duty = 0;
+//	  }
+	  Rote = 0;
 
 	  if (u<0)
 	  {
-		 Rote = -1;
+	  	Rote = -1;
 	  }
 
 	  if(Rote == 0)
 	  {
-
 		  __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_1,duty*10);
 		  __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_2,0);
 	  }
 
 	  if(Rote == -1)
 	  {
-
 		  __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_1,0);
 		  __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_2,duty*10);
 	  }
